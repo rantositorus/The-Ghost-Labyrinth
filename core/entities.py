@@ -1,42 +1,39 @@
 class Maze:
-    def __init__(self, width: height, initial_data=None):
+    def __init__(self, width: int, height: int, initial_grid: list[list[int]] = None):
         self.width = width
         self.height = height
-        if initial_data:
-            self.grid = initial_data
-        else:
-            self.grid = [[0 for _ in range(self.width)] for _ in range(self.height)]
+        self.grid = initial_grid if initial_grid is not None else [[0 for _ in range(self.width)] for _ in range (self.height)]
 
-    def is_wall(self, x, y):
+    def is_wall(self, x: int, y: int) -> bool:
         if not self.is_valid_position(x, y):
             return True
         return self.grid[y][x] == 1
     
-    def is_valid_position(self, x, y):
+    def is_valid_position(self, x: int, y: int) -> bool:
         return 0 <= x < self.width and 0 <= y < self.height
     
 class Character:
-    def __init__(self, name, start_pos, maze: Maze):
+    def __init__(self, name: str, start_pos: tuple[int, int], maze: Maze):
         self.name = name
         self.position = start_pos
         self.maze = maze
         self.direction = (0, 0)
 
-    def set_direction(self, dx, dy):
+    def set_direction(self, dx: int, dy: int):
         self.direction = (dx, dy)
     
-    def get_next_position(self):
-        return (self.pos[0] + self.direction[0], self.pos[1] + self.direction[1])
+    def get_next_position(self) -> tuple[int, int]:
+        return (self.position[0] + self.direction[0], self.position[1] + self.direction[1])
     
-    def move_to(self, new_pos):
-        self.pos = new_pos
+    def move_to(self, new_pos: tuple[int, int]):
+        self.position = new_pos
     
-    def can_move_to(self, x, y):
+    def can_move_to(self, x: int, y: int) -> bool:
         return self.maze.is_valid_position(x, y) and not self.maze.is_wall(x, y)
     
-    def get_neighbors(self, current_pos=None):
+    def get_neighbors(self, current_pos: tuple[int, int] = None) -> list[tuple[int, int]]:
         if current_pos is None:
-                current_pos = self.pos
+                current_pos = self.position
         x, y = current_pos
         neighbors = []
         for dx, dy in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
@@ -45,15 +42,15 @@ class Character:
                 neighbors.append((new_x, new_y))
         return neighbors
     
-class Pacman(Character):
-    def __init__(self, start_pos, maze: Maze):
+class PacMan(Character):
+    def __init__(self, start_pos: tuple[int, int], maze: Maze):
         super().__init__("Pacman", start_pos, maze)
         self.score = 0
 
 class Ghost(Character):
-    def __init__(self, name, start_pos, maze: Maze):
+    def __init__(self, name: str, start_pos: tuple[int, int], maze: Maze):
         super().__init__(name, start_pos, maze)
 
 class Coin:
-    def __init__(self, pos):
-        self.position = pos
+    def __init__(self, position: tuple[int, int]):
+        self.position = position
