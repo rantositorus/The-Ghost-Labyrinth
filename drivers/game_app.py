@@ -9,7 +9,7 @@ class GameApp:
     def __init__(self, game_mode="PLAYER_AS_ENEMY"):
         pygame.init()
         self.screen = pygame.display.set_mode((config.SCREEN_WIDTH, config.SCREEN_HEIGHT))
-        pygame.display.set_caption("Pac-Man AI (PAA Project - Clean Arch)")
+        pygame.display.set_caption("Pac-Man AI")
         self.clock = pygame.time.Clock()
         self.running = True
         self.game_mode = game_mode

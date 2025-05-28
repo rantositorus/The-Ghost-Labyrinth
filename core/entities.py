@@ -5,9 +5,11 @@ class Maze:
         if initial_data:
             self.grid = initial_data
         else:
-            self.grid = [[0 for _ in range(width)] for _ in range(height)]
+            self.grid = [[0 for _ in range(self.width)] for _ in range(self.height)]
 
     def is_wall(self, x, y):
+        if not self.is_valid_position(x, y):
+            return True
         return self.grid[y][x] == 1
     
     def is_valid_position(self, x, y):
