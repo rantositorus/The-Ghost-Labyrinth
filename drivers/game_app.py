@@ -17,7 +17,8 @@ class GameApp:
         self.maze = self._generate_initial_maze()
         self.pacman = PacMan(start_pos=(1, 1), maze=self.maze)
         self.ghosts = [
-            Ghost(name="Jacobi", start_pos=(config.MAZE_WIDTH - 2, config.MAZE_HEIGHT - 2), maze=self.maze)
+            Ghost(name="Jacobi", start_pos=(config.MAZE_WIDTH - 2, config.MAZE_HEIGHT - 2), maze=self.maze),
+            Ghost(name="Lutung", start_pos=(config.MAZE_WIDTH - 3, config.MAZE_HEIGHT - 3), maze=self.maze)
         ]
         self.coins = self._place_initial_coins()
 
@@ -97,7 +98,7 @@ class GameApp:
                 # The first ghost is controlled by player, its move was handled in _handle_input
                 pass 
             else:
-                self.move_ghost_services.execute(ghost, self.pacman)
+                self.move_ghost_services.execute(ghost, self.pacman, self.ghosts)
         
         # Update game state after all moves
         self.game_state.update()
